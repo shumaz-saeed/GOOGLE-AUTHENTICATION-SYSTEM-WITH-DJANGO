@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+</head>
+<body>
+    <h1>Welcome to the Home Page!</h1>
+
+    {% if user.is_authenticated %}
+        <p>Hello, {{ user.username }}!</p>
+        <p>Your email: {{ user.email }}</p>
+        <p><a href="{% url 'account_logout' %}">Log Out</a></p>
+        <p><a href="{% url 'account_change_password' %}">Change Password</a></p>
+        {# Add other authenticated user links here #}
+    {% else %}
+        <p>You are not logged in.</p>
+        <p><a href="{% url 'account_login' %}">Log In</a></p>
+        <p><a href="{% url 'account_signup' %}">Sign Up</a></p>
+        <p>Or log in with:</p>
+        {# Check if the Google social account provider is enabled and configured #}
+        {% if socialaccount_providers.google %}
+            <p><a href="{% url 'google_login' %}" class="google-login-button">Login with Google</a></p>
+        {% endif %}
+    {% endif %}
+</body>
+</html>
